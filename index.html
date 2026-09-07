@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel A. Barber - Architecture, history, and the climate crisis</title>
+<meta name="description" content="Daniel A. Barber is Professor and Chair of Architectural History and Theory at TU Eindhoven, exploring architecture, climate, and cultural expectations of comfort.">
+<link rel="canonical" href="https://danielabarber.net/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Daniel A. Barber - Architecture, history, and the climate crisis">
+<meta property="og:description" content="Professor and Chair of Architectural History and Theory at TU Eindhoven, exploring architecture, climate, and cultural expectations of comfort.">
+<meta property="og:url" content="https://danielabarber.net/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Daniel A. Barber - Architecture, history, and the climate crisis">
+<meta name="twitter:description" content="Professor and Chair of Architectural History and Theory at TU Eindhoven, exploring architecture, climate, and cultural expectations of comfort.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Daniel A. Barber",
+  "jobTitle": "Professor and Chair of Architectural History and Theory",
+  "url": "https://danielabarber.net/",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Eindhoven University of Technology"
+  },
+  "description": "Daniel A. Barber explores the relationship between architecture and the changing climate, with a focus on cultural expectations of comfort."
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EAD4BC;
+    --paper-deep: #E0C3A0;
+    --ink: #22262B;
+    --ink-soft: #565B57;
+    --dark: #1C2420;
+    --dark-text: #E6E2D6;
+    --dark-dim: #8B9089;
+    --teal: #3E6B5E;
+    --rust: #9C5A34;
+    --rule: #B7B0A0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    line-height: 1.6;
+    font-size: 17px;
+  }
+
+  a { color: var(--ink); text-decoration: underline dotted; text-decoration-color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { color: var(--teal); text-decoration-style: solid; text-decoration-color: var(--teal); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+
+  h1, h2, h3 { font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
+  .mono { font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-weight: 500; }
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* ---------- Hamburger button ---------- */
+  .menu-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--dark);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+  }
+  .menu-btn span {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: var(--dark-text);
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  .menu-btn span:nth-child(1) { transform: translateY(-6px); }
+  .menu-btn span:nth-child(3) { transform: translateY(6px); }
+  .menu-btn.open span:nth-child(1) { transform: translateY(0) rotate(45deg); }
+  .menu-btn.open span:nth-child(2) { opacity: 0; }
+  .menu-btn.open span:nth-child(3) { transform: translateY(0) rotate(-45deg); }
+
+  .sound-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--dark);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+  }
+  .sound-btn svg { width: 18px; height: 18px; }
+  .sound-btn .icon-unmuted { display: none; }
+  .sound-btn.unmuted .icon-muted { display: none; }
+  .sound-btn.unmuted .icon-unmuted { display: block; }
+
+  /* ---------- Drawer ---------- */
+  .scrim {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 90;
+  }
+  .scrim.open { opacity: 1; pointer-events: auto; }
+
+  .drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(320px, 85vw);
+    background: var(--dark);
+    color: var(--dark-text);
+    padding: 6rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 95;
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer .id-block {
+    border-bottom: 1px solid rgba(230,226,214,0.2);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .drawer .name { font-weight: 700; font-size: 1.3rem; line-height: 1.25; margin-bottom: 0.75rem; }
+  .drawer .role { font-size: 0.9rem; color: var(--dark-dim); line-height: 1.5; }
+
+  .drawer nav ul { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+  .drawer nav a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
+    color: var(--dark-dim);
+    border-bottom: none;
+    display: flex;
+    gap: 0.6rem;
+  }
+  .drawer nav a .tag { color: var(--teal); font-variant-numeric: tabular-nums; }
+  .drawer nav a:hover { color: var(--dark-text); }
+
+  .drawer .foot { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--dark-dim); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 480px;
+    overflow: hidden;
+  }
+
+  .hero-media { position: absolute; inset: 0; z-index: 0; }
+
+  .hero-fallback {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(62,107,94,0.55), transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(28,36,32,0.9), transparent 60%),
+      var(--dark);
+    background-size: 180% 180%;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+
+  /*
+    Once you have your video file:
+    1. Place it in the same folder as this HTML file (e.g. hero.mp4)
+    2. Uncomment the <video> element in the HTML below and update the filename
+    The .hero-fallback gradient above will sit behind it either way, as a backup
+    for the moment it takes to load.
+  */
+  .hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 1.5rem;
+    left: 2rem;
+    right: 6rem;
+    z-index: 2;
+    text-align: left;
+    color: var(--dark-text);
+  }
+
+  .hero-content .name {
+    font-size: clamp(1.3rem, 2.8vw, 1.7rem);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .hero-content .role {
+    margin: 0.3rem 0 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: var(--dark-text);
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--dark-dim);
+    text-align: center;
+  }
+  .scroll-cue .arrow { display: block; margin-top: 0.3rem; }
+
+  /* ---------- Main content ---------- */
+  .full-row { max-width: 1040px; margin: 0; padding: 0 1.5rem 0 3.5rem; }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 2.5rem;
+    max-width: 1040px;
+    margin: 0;
+    padding: 0 1.5rem 0 3.5rem;
+    align-items: start;
+  }
+  main { max-width: none; margin: 0; padding: 0; }
+
+  .image-col { display: flex; flex-direction: column; gap: 1.5rem; padding-top: 4.4rem; }
+  .image-col figure { margin: 0; }
+  .image-col img { width: 100%; display: block; border-radius: 2px; }
+  .image-col figure a { display: block; }
+  .image-col figcaption { margin-top: 0.4rem; font-size: 0.75rem; color: var(--ink-soft); }
+
+  section { padding: 1.4rem 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+
+  section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; }
+
+  .thesis { font-size: 1.05rem; font-weight: 500; line-height: 1.5; }
+
+  .lecture-list { list-style: none; }
+  .lecture-list li {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.2rem 0;
+    font-size: 0.87rem;
+    line-height: 1.35;
+  }
+  .lecture-date {
+    flex: 0 0 3.4rem;
+    color: var(--rust);
+    font-size: 0.82rem;
+    padding-top: 0.05rem;
+  }
+  .lecture-text { flex: 1 1 auto; min-width: 0; }
+
+  .placeholder {
+    color: var(--ink-soft);
+    font-style: italic;
+    border-left: 2px dashed var(--rule);
+    padding-left: 1rem;
+  }
+
+  .entry {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.3rem 0;
+  }
+  .entry-thumb {
+    flex: 0 0 3.2rem;
+    width: 3.2rem;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 2px;
+    background: var(--paper-deep);
+  }
+  .entry h3 { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.1rem; line-height: 1.3; }
+  .entry p { color: var(--ink-soft); font-size: 0.87rem; line-height: 1.42; }
+  .entry p + p { margin-top: 0.5rem; }
+  .pub-entry .venue { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.1rem; }
+  .pub-links { font-size: 0.78rem; margin-top: 0.15rem; }
+
+  .subhead {
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0.75rem 0 0.15rem;
+  }
+  .eyebrow + .subhead { margin-top: 0; }
+
+  .coming-soon {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--rule);
+  }
+  .coming-soon-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .coming-soon p {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  .contact-links {
+    display: flex; flex-direction: row; flex-wrap: wrap;
+    column-gap: 1.25rem; row-gap: 0.4rem;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+  }
+
+  #contact p { font-size: 0.85rem; }
+  #contact p + p { margin-top: 0.4rem; }
+
+  footer {
+    padding: 1.5rem 1.5rem 3rem 3rem;
+    max-width: 1040px;
+    margin: 0;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 900px) {
+    .content-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .image-col { flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+    .image-col figure { flex: 0 1 160px; }
+  }
+
+  @media (max-width: 700px) {
+    .content-grid, .full-row, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+    section { padding: 1.25rem 0; }
+    .hero-content { left: 1.25rem; right: 4.5rem; top: 1.25rem; }
+    .hero-content .role { font-size: 0.7rem; }
+  }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script data-goatcounter="https://dab.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+    <span></span><span></span><span></span>
+  </button>
+
+  <button class="sound-btn" id="soundBtn" aria-label="Turn sound on" aria-pressed="false">
+    <svg class="icon-muted" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9" fill="var(--dark-text)" stroke="none"></polygon>
+      <line x1="16" y1="9" x2="22" y2="15" stroke="var(--dark-text)"></line>
+      <line x1="22" y1="9" x2="16" y2="15" stroke="var(--dark-text)"></line>
+    </svg>
+    <svg class="icon-unmuted" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9" fill="var(--dark-text)" stroke="none"></polygon>
+      <path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="var(--dark-text)"></path>
+      <path d="M18.5 5.5a9 9 0 0 1 0 13" fill="none" stroke="var(--dark-text)"></path>
+    </svg>
+  </button>
+
+  <div class="scrim" id="scrim"></div>
+
+  <aside class="drawer" id="drawer">
+    <div>
+      <div class="id-block">
+        <div class="name">Daniel A. Barber</div>
+        <div class="role">Professor &amp; Chair, Architectural History and Theory<br>Eindhoven University of Technology</div>
+      </div>
+      <nav aria-label="Section index">
+        <ul>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#lectures" class="nav-link">Upcoming Lectures</a></li>
+          <li><a href="#media" class="nav-link">Recent Lectures, Interviews, and Podcasts</a></li>
+          <li><a href="#projects" class="nav-link">Collaborative Projects</a></li>
+          <li><a href="#editorial" class="nav-link">Collaborative Editorial Projects</a></li>
+          <li><a href="#publications" class="nav-link">Selected Publications</a></li>
+          <li><a href="#teaching" class="nav-link">Teaching</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="foot">LAST REVISED<br>August 2026</div>
+  </aside>
+
+  <section class="hero">
+    <div class="hero-media">
+      <div class="hero-fallback"></div>
+      <video class="hero-video" autoplay muted loop playsinline poster="hero-poster.jpg">
+        <source src="hero.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="name">Daniel A. Barber</h1>
+      <div class="role">Explorations in architecture&rsquo;s changing relationship to climate.</div>
+    </div>
+    <div class="scroll-cue">SCROLL<span class="arrow">↓</span></div>
+  </section>
+
+  <div class="full-row">
+    <section id="about">
+      <span class="eyebrow">About</span>
+      <p class="thesis">I explore the dynamic relationship between architecture and the rapidly changing climate. I&rsquo;m particularly interested in cultural expectations of comfort — and in how those expectations are changing dramatically as the world overheats.</p>
+      <p style="margin-top: 0.5rem;">These ideas are developed in my book <em>Modern Architecture and Climate</em> (2020), the essay &ldquo;After Comfort&rdquo; (2019), and the ongoing series <em>After Comfort: A User&rsquo;s Guide</em>, as well as through other publications and projects, including <em>Terms and Conditions</em>, an uncomfortable room designed for the Arsenale at the 19th Venice Architecture Biennale (2025).</p>
+      <p style="margin-top: 0.5rem;">I am Professor and Chair of Architectural History and Theory at the Eindhoven University of Technology, where I teach studios and lecture courses and run a research team on Architecture History and Decarbonisation. I am part of a number of collaborative writing and editing projects aiming to support engaged research that has tangible impact on how we can live differently in the built environment.</p>
+    </section>
+
+    <section id="lectures">
+      <span class="eyebrow">Upcoming Lectures</span>
+      <!--
+        This list is meant to be edited often — just add or remove a <li> line.
+        Format: <li><span class="lecture-date mono">Mon DD</span> Title — Venue</li>
+        Keep the most recent/upcoming one at the top.
+      -->
+      <ul class="lecture-list">
+        <li><span class="lecture-date mono">Sep 15</span><span class="lecture-text"><em>Reshaping Comfort</em> Part of <a href="https://www.fhnw.ch/de/architektur-bau-geomatik/aktuelles/veranstaltungen/alle/iarch-hs26-staying-cool-symp" target="_blank" rel="noopener">Staying Cool &ndash; Concepts for the Heated City,</a> FHNW, Basel, Switzerland</span></li>
+        <li><span class="lecture-date mono">Oct 1</span><span class="lecture-text"><em>What Comes After Sustainability?</em> At the Universit&agrave; di Palermo, Italy</span></li>
+        <li><span class="lecture-date mono">Oct 9</span><span class="lecture-text"><em>The Sufficiency Consultancy Studio</em> As part of the launch of <a href="https://www.ideabooks.nl/9789462089525-oase-122-123-ecological-pedagogies" target="_blank" rel="noopener">OASE 122 Ecological Pedagogies</a>, at Het Nieuwe Instituut, Rotterdam, Netherlands</span></li>
+        <li><span class="lecture-date mono">Oct 13</span><span class="lecture-text">Closing lecture for <a href="https://mao.si/en/exhibition/je-narava-moderna/" target="_blank" rel="noopener">Is Nature Modern</a> at Museum of Architecture and Design (MAO) Ljubljana, Slovenia, details to come</span></li>
+        <li><span class="lecture-date mono">Oct 22</span><span class="lecture-text">Presentation at the symposium <em>Unstable Models</em>, Dessau, Germany, details to come</span></li>
+        <li><span class="lecture-date mono">Nov 18</span><span class="lecture-text"><em>Designing for Discomfort: Cultures of Energy After Carbon</em> At <a href="https://www.impulse.uni-bonn.de/de" target="_blank" rel="noopener">IMPULSE</a> &ndash; House for Intellectual Innovation and Creativity, Universit&auml;t Bonn, Germany</span></li>
+        <li><span class="lecture-date mono">Apr 7</span><span class="lecture-text"><em>Make Yourself Uncomfortable</em> At Carnegie Mellon School of Architecture, Pittsburgh, USA</span></li>
+      </ul>
+    </section>
+
+    <section id="media">
+      <span class="eyebrow">Recent Lectures, Interviews, and Podcasts</span>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.kathimerini.gr/k/k-magazine/564288157/tha-sosei-i-architektoniki-ton-planiti-k-mparmper/" target="_blank" rel="noopener">Will Architecture Save the Planet?</a></h3>
+          <div class="venue">Interview with Nadia Soufli, <em>K Magazine</em>, Kathimerini (in Greek), 2026</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.youtube.com/watch?v=ykev5RnsxeY&list=PLv9iaWy6rGIDvI_s0L6mou_cGpb7Nm87g&index=14" target="_blank" rel="noopener">Re-enchanting the Thermal Interior</a></h3>
+          <div class="venue">keynote at the <em>3rd New Eleusis Symposium, &ldquo;Re-enchanting the World&rdquo;</em>, organised by the World Human Forum, Eleusis, Greece, 2025</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://open.spotify.com/episode/1SFoknLgApZT2ofIGZYP5P" target="_blank" rel="noopener">Apocalyptic Optimism: Reshaping Architecture, Reshaping Habits</a></h3>
+          <div class="venue"><em>The Architect&rsquo;s Rolodex</em>, COOKFOX Architects, 2025</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://koozarch.com/podcasts/talks-at-the-venice-biennale" target="_blank" rel="noopener">Sitting Comfortably?</a></h3>
+          <div class="venue">with Dehlia Hannah and Andrea Faraguna, on <em>Talks at the Venice Biennale</em> presented by KoozArch, 2025</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.thebritishacademy.ac.uk/projects/the-times-of-a-just-transition/" target="_blank" rel="noopener">Imagining and Embodying Low Carbon Futures</a></h3>
+          <div class="venue">with Johannes Stripple and Keri Facer, for <em>The Temporal Imagination</em>, part of the British Academy Global Convening Grant <em>The Times of a Just Transition</em>, 2025</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://podcasts.apple.com/us/podcast/how-air-conditioning-conquered-america/id1200361736?i=1000665609731" target="_blank" rel="noopener">How Air-Conditioning Conquered America</a></h3>
+          <div class="venue"><em>The Daily</em>, The New York Times, Aug 2024 (paywalled)</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.youtube.com/watch?v=yUZ_GRQqeOE" target="_blank" rel="noopener">Agents of Decarbonisation: A New Social Role for Architecture</a></h3>
+          <div class="venue">Faculty of Architecture, University of Porto (FAUP), Portugal, 2024</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.youtube.com/watch?v=5VoJ5EEpTkY&list=PLz7CkDLtHf3rkuf_8KivJcp_yGwLcqqOJ&index=2" target="_blank" rel="noopener">Architecture in the Aftermath</a></h3>
+          <div class="venue"><em>Arguments Lecture Series</em>, Columbia University (GSAPP), New York, 2022</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <span class="eyebrow">Collaborative Projects</span>
+
+      <div class="entry">
+        <div>
+          <h3><a href="https://www.stirworld.com/see-features-back-to-the-start-how-the-intro-to-the-venice-biennale-confronts-the-comfortocene?utm_source=autosuggestion_search&utm_medium=stirworld_search" target="_blank" rel="noopener">Terms and Conditions</a></h3>
+          <p>Seen in the video clip above, an installation commissioned for the 19th Venice Architecture Biennale (May 10 &ndash; November 23, 2025). With Thomas Auer, Dehlia Hannah, Sonia Seviranante, and many others, we designed an uncomfortable room. Air conditioners spun and hummed, but visitors felt only the waste heat, not the cool side of the device. Viewers were confronted with the inequities of thermal comfort. Review available <a href="https://www.wallpaper.com/architecture/carlo-ratti-intelligens-venice-biennale-review" target="_blank" rel="noopener">here</a>.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div>
+          <h3><a href="https://www.e-flux.com/architecture/after-comfort/624784/climate-portraits-nieuwe-instituut" target="_blank" rel="noopener">Climate Portraits: Het Nieuwe Instituut</a></h3>
+          <p>Co-directed with Nick Axel and the After Comfort: A User&rsquo;s Guide team: a video documenting the transition to an updated heating and cooling system at Het Nieuwe Instituut, Rotterdam. Commissioned for the IABR&ndash;International Architecture Biennale Rotterdam, 2024. Will be exhibited at the Architekturmuseum der TUM, Munich, November 19, 2026 &ndash; May 23, 2027.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="editorial">
+      <span class="eyebrow">Collaborative Editorial Projects</span>
+
+      <div class="entry">
+        <div>
+          <h3><a href="https://www.e-flux.com/architecture/after-comfort" target="_blank" rel="noopener">After Comfort: A User&rsquo;s Guide</a></h3>
+          <p>An ongoing series of essays and projects on <em>e-flux Architecture</em>, exploring how to live comfortably indoors without fossil fuels. Commissioned essays by Michelle Addington, TEd&rsquo;A arquitectes, Ksenia Litvinenko, Dehlia Hannah, Kate Wagner, Mal Ahern, Florian Idenburg, Marc Ang&eacute;lil, Nausheen Anwar, Aleksandra K&#281;dziorek, and many others. Co-edited with Jeannette Kuo, Ola Uduku, Thomas Auer, and Nick Axel.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div>
+          <h3><a href="https://www.upress.umn.edu/announcing-a-new-series-cohabitations/" target="_blank" rel="noopener">Cohabitations</a></h3>
+          <p>A new book series at University of Minnesota Press examining the historical interdependencies of built environments and constructed ecologies. Co-edited with Namita Vijay Dharia, Anooradha Iyer Siddiqi, Peg Rawes, and Ikem Stanley Okoye.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div>
+          <h3><a href="https://www.e-flux.com/architecture/accumulation" target="_blank" rel="noopener">Accumulation</a></h3>
+          <p>An annual dossier of essays on <em>e-flux Architecture</em> critically analysing media and design in light of the accumulation of material, waste, anxiety, and almost everything else. Essays explore how images of accumulation help open up the climate to cultural inquiry and political mobilization. Commissioned essays by Kathryn Yusoff, T.J. Demos, Emily Apter, Wendy Hui Kyong Chun, Nicole Starosielski, Adam Bobbette, Macarena G&oacute;mez-Barris, Bruno Latour, G&ouml;k&ccedil;e G&uuml;nel, and many others.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="content-grid">
+    <main>
+
+    <section id="publications">
+      <span class="eyebrow">Selected Publications</span>
+
+      <div class="subhead">Books</div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://press.princeton.edu/books/hardcover/9780691170039/modern-architecture-and-climate" target="_blank" rel="noopener">Modern Architecture and Climate: Design before Air Conditioning</a></h3>
+          <div class="venue">Princeton University Press, 2020</div>
+          <div class="pub-links"><a href="essays/barber-modern-architecture-and-climate-intro.pdf" target="_blank" rel="noopener">Introduction</a> &middot; <a href="https://www.archpaper.com/2020/07/review-modern-architecture-and-climate-climaticization-takes-command/" target="_blank" rel="noopener">Review</a></div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://global.oup.com/academic/product/a-house-in-the-sun-9780199394012?lang=en&cc=us" target="_blank" rel="noopener">A House in the Sun: Modern Architecture and Solar Energy in the Cold War</a></h3>
+          <div class="venue">Oxford University Press, 2016</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.upress.umn.edu/9781517911515/accumulation/" target="_blank" rel="noopener">Accumulation: The Art, Architecture and Media of Climate Change</a></h3>
+          <div class="venue">University of Minnesota Press, 2022</div>
+        </div>
+      </div>
+
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.routledge.com/Energy-Accounts-Architectural-Representations-of-Energy-Climate-and-the/Willis-Braham-Muramoto-Barber/p/book/9781138914117" target="_blank" rel="noopener">Energy Accounts: Architectural Representations of Energy, Climate and the Future</a></h3>
+          <div class="venue">Routledge, 2016</div>
+        </div>
+      </div>
+
+      <div class="subhead">Articles</div>
+      <div class="entry pub-entry">
+        <div>
+          <h3>Past Deadlines</h3>
+          <div class="venue"><em>Air Conditioned: Architecture Between Comfort and Climate</em>, Park Books, forthcoming 2026</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3>Do Buildings Dream</h3>
+          <p>In collaboration with the Oslo Architecture Triennale.</p>
+          <div class="venue"><em>Metode</em>, forthcoming 2026</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3>Becoming Active</h3>
+          <p>Part of the roundtable &ldquo;Energy and &lsquo;Green Building&rsquo; Since the 1970s.&rdquo;</p>
+          <div class="venue"><em>Journal of the Society of Architectural Historians</em>, forthcoming 2026</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://architecturaldesign-ad.com/shop/p/vol-963" target="_blank" rel="noopener">Spectres of Modernism</a></h3>
+          <p>Co-written with Fatma Al Alawi and Michelle Addington.</p>
+          <div class="venue"><em>AD: The New Heliomorphism</em>, 2026</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://a-plus.be/en/a-departure-from-status-quo/" target="_blank" rel="noopener">Weary of Solutions</a></h3>
+          <div class="venue"><em>A+ Architecture in Belgium</em> (paywall), 2025</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://placesjournal.org/article/drawing-the-line-architecture-in-the-anthropocene/" target="_blank" rel="noopener">Drawing the Line: Architecture and Repair in the Anthropocene</a></h3>
+          <div class="venue"><em>Places Journal</em>, 2024</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-solar-sufficiency-imperative.pdf" target="_blank" rel="noopener">Solar Architecture and the Sufficiency Imperative</a></h3>
+          <div class="venue"><em>Renewable and Sustainable Energy Transition</em>, 2023</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.artpapers.org/architecture_and_sufficiency/" target="_blank" rel="noopener">Architecture and Sufficiency: A Case Study in Applied History</a></h3>
+          <div class="venue"><em>Art Papers</em>, 2023</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://cca-bookstore.com/products/modes-of-concealment-architecture-oil-and-historical-method" target="_blank" rel="noopener">&ldquo;Modes of Concealment&rdquo;: Architecture and the Oil Encounter</a></h3>
+          <div class="venue"><em>Environmental Histories of Architecture</em>, CCA, 2022</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-active-passive.pdf" target="_blank" rel="noopener">Active Passive: Heat Storage and the Solar Imaginary</a></h3>
+          <div class="venue"><em>South Atlantic Quarterly</em>, 2021</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-doors-portals-revisited.pdf" target="_blank" rel="noopener">Doors and Portals, Revisited</a></h3>
+          <div class="venue"><em>Architecture Theory Review</em>, 2020</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-after-comfort.pdf" target="_blank" rel="noopener">After Comfort</a></h3>
+          <div class="venue"><em>Log</em>, no. 47, 2019</div>
+          <div class="pub-links">Also in <a href="essays/barber-after-comfort-dutch.pdf" target="_blank" rel="noopener">Dutch</a> &middot; <a href="essays/barber-after-comfort-polish.pdf" target="_blank" rel="noopener">Polish</a> &middot; <a href="essays/barber-after-comfort-russian.pdf" target="_blank" rel="noopener">Russian</a> &middot; <a href="https://tpworkunit.com/texts/" target="_blank" rel="noopener">French</a> (forthcoming October)</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="https://www.e-flux.com/architecture/overgrowth/284030/emergency-exit/" target="_blank" rel="noopener">Emergency Exit</a></h3>
+          <div class="venue"><em>e-flux Architecture</em>, Overgrowth (Oslo Architecture Triennale), 2019</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-heating-the-bauhaus.pdf" target="_blank" rel="noopener">Heating the Bauhaus: Understanding the History of Architecture in the Context of Energy Policy and Energy Transition</a></h3>
+          <div class="venue"><em>Energy Policy White Papers</em>, Kleinman Center for Energy Policy, UPenn, 2019</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-nature-of-the-image.pdf" target="_blank" rel="noopener">The Nature of the Image: Olgyay and Olgyay&rsquo;s Architectural-Climatic Diagrams in the 1950s</a></h3>
+          <div class="venue"><em>Public Culture</em>, 2017</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-architectural-history-in-the-anthropocene.pdf" target="_blank" rel="noopener">Architectural History in the Anthropocene</a></h3>
+          <div class="venue"><em>The Journal of Architecture</em> (guest editor), 2016</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-form-climate-research-group.pdf" target="_blank" rel="noopener">The Form and Climate Research Group; or, Scales of Architectural History</a></h3>
+          <div class="venue"><em>Climates: Architecture and the Planetary Imaginary</em>, Lars M&uuml;ller, 2016</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-casablanca-solar-house.pdf" target="_blank" rel="noopener">The Casablanca Solar House: Energy and Technological Exchange in the Cold War</a></h3>
+          <div class="venue"><em>AGENDA: The Catalogue of the US Pavilion at the Venice Biennale</em>, Lars M&uuml;ller, 2014</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-world-solar-energy-project.pdf" target="_blank" rel="noopener">The World Solar Energy Project, ca. 1954</a></h3>
+          <div class="venue"><em>Grey Room</em>, 2013</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-experimental-dwellings.pdf" target="_blank" rel="noopener">Experimental Dwellings: Modern Architecture and Environmental Research at the MIT Solar Energy Fund, 1938&ndash;1963</a></h3>
+          <div class="venue"><em>A Second Modernism: MIT, Architecture, and the &lsquo;Techno-Social&rsquo; Moment</em>, MIT Press, 2013</div>
+        </div>
+      </div>
+      <div class="entry pub-entry">
+        <div>
+          <h3><a href="essays/barber-militant-architecture.pdf" target="_blank" rel="noopener">Militant Architecture: Destabilizing Architecture&rsquo;s Disciplinarity</a></h3>
+          <div class="venue"><em>Critical Architecture</em>, Taylor &amp; Francis, 2007</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teaching">
+      <span class="eyebrow">Teaching</span>
+
+      <div class="entry">
+        <div>
+          <h3>The Sufficiency Consultancy Studio</h3>
+          <p>Working in the Northern neighborhoods of Marseille, the studio asks how increasing climate instability and economic inequity reshape the project and process of architectures. Drawing on local knowledge and global discussions of sufficiency and efficiency, we explore how architecture can drive behavioral and cultural change to reduce absolute energy demand. Co-taught with Katja Hogenboom.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div>
+          <h3>PhD Studies with the Working Group on History and Decarbonisation</h3>
+          <p>Advanced archival, conceptual and design-based research focused on how historical methods can be reimagined to support the urgent imperative for decarbonising the built environment. Details <a href="https://www.e-flux.com/announcements/6785650/open-call-for-phd-proposals" target="_blank" rel="noopener" style="color: inherit;">here</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <span class="eyebrow">Contact</span>
+      <p>For research collaborations, press inquiries, speaking invitations, or other questions, get in touch by email.</p>
+      <p>If your inquiry relates to the <a href="https://www.upress.umn.edu/announcing-a-new-series-cohabitations/" target="_blank" rel="noopener">Cohabitations</a> book series (University of Minnesota Press), please write directly to <a href="mailto:cohabitations@proton.me" target="_blank" rel="noopener">cohabitations@proton.me</a>.</p>
+      <p>If your inquiry concerns PhD studies in History and Decarbonisation, note that applications are due in the spring, as <a href="https://www.e-flux.com/announcements/6785650/open-call-for-phd-proposals" target="_blank" rel="noopener">here</a>.</p>
+      <div class="contact-links">
+        <a href="mailto:d.a.barber@tue.nl" target="_blank" rel="noopener">d.a.barber@tue.nl</a>
+        <a href="https://scholar.google.com/citations?hl=en&user=4HSr4vYAAAAJ" target="_blank" rel="noopener">Google Scholar →</a>
+        <a href="https://www.tue.nl/en/research/researchers/daniel-barber" target="_blank" rel="noopener">TU/e faculty profile →</a>
+        <a href="https://www.linkedin.com/in/daniel-a-barber-99200a61/" target="_blank" rel="noopener">LinkedIn →</a>
+        <a href="https://www.instagram.com/abdbcb" target="_blank" rel="noopener">Instagram (@abdbcb) →</a>
+        <a href="https://www.instagram.com/aht_aude_be_tue" target="_blank" rel="noopener">TU/e Chair Instagram (@aht_aude_be_tue) →</a>
+      </div>
+    </section>
+
+    </main>
+
+    <aside class="image-col">
+      <figure>
+        <a href="https://press.princeton.edu/books/hardcover/9780691170039/modern-architecture-and-climate" target="_blank" rel="noopener">
+          <img src="images/modern-architecture-and-climate.jpg" alt="Modern Architecture and Climate (2020)">
+        </a>
+        <figcaption>Modern Architecture and Climate (2020)</figcaption>
+      </figure>
+
+      <figure>
+        <a href="https://architecturaldesign-ad.com/shop/p/vol-963" target="_blank" rel="noopener">
+          <img src="images/specters-of-modernism.jpg" alt="Specters of Modernism (2026)">
+        </a>
+        <figcaption>Specters of Modernism (2026)</figcaption>
+      </figure>
+
+      <figure>
+        <a href="https://global.oup.com/academic/product/a-house-in-the-sun-9780199394012?lang=en&cc=us" target="_blank" rel="noopener">
+          <img src="images/a-house-in-the-sun.jpg" alt="A House in the Sun (2016)">
+        </a>
+        <figcaption>A House in the Sun (2016)</figcaption>
+      </figure>
+
+      <figure>
+        <a href="essays/barber-after-comfort.pdf" target="_blank" rel="noopener">
+          <img src="images/after-comfort.jpg" alt="After Comfort (2019)">
+        </a>
+        <figcaption>After Comfort (2019)</figcaption>
+      </figure>
+
+      <figure>
+        <a href="https://cca-bookstore.com/products/modes-of-concealment-architecture-oil-and-historical-method" target="_blank" rel="noopener">
+          <img src="images/modes-of-concealment.jpg" alt="Modes of Concealment (2022)">
+        </a>
+        <figcaption>Modes of Concealment (2022)</figcaption>
+      </figure>
+    </aside>
+  </div>
+
+  <footer>© 2026 Daniel A. Barber. Built as a static site.</footer>
+
+  <script>
+    const soundBtn = document.getElementById('soundBtn');
+    const heroVideo = document.querySelector('.hero-video');
+
+    soundBtn.addEventListener('click', () => {
+      if (!heroVideo) return;
+      heroVideo.muted = !heroVideo.muted;
+      const isUnmuted = !heroVideo.muted;
+      soundBtn.classList.toggle('unmuted', isUnmuted);
+      soundBtn.setAttribute('aria-pressed', String(isUnmuted));
+      soundBtn.setAttribute('aria-label', isUnmuted ? 'Turn sound off' : 'Turn sound on');
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    const scrim = document.getElementById('scrim');
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      scrim.classList.add('open');
+      menuBtn.classList.add('open');
+      menuBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      scrim.classList.remove('open');
+      menuBtn.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    menuBtn.addEventListener('click', () => {
+      drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    scrim.addEventListener('click', closeDrawer);
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', closeDrawer);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // Report clicks on PDFs, outbound links, and email to GoatCounter as events.
+    // GoatCounter's page script only counts page loads, so links that leave
+    // the site (or files like PDFs that never run the script) are invisible
+    // to it unless we report the click ourselves, right before navigation.
+    document.addEventListener('click', function (e) {
+      const link = e.target.closest('a[href]');
+      if (!link || !window.goatcounter) return;
+
+      const href = link.getAttribute('href');
+      const isPDF = /\.pdf($|\?)/i.test(href);
+      const isMail = href.startsWith('mailto:');
+      const isExternal = /^https?:\/\//i.test(href) && !href.startsWith(location.origin);
+
+      if (isPDF || isMail || isExternal) {
+        goatcounter.count({
+          path: href,
+          title: (link.textContent || href).trim(),
+          event: true
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
